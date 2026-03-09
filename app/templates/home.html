@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LedgerFlow - NOVA CONTA</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <section class="hero">
+        <div class="hero-box">
+            <h1>LedgerFlow</h1>
+            <p class="subtitle">Sistema de Gestão Contábil da NOVA CONTA</p>
+            <p class="hero-text">
+                Plataforma desenvolvida para controle de clientes, cadastro de boletos,
+                acompanhamento de mensalidades e organização financeira.
+            </p>
+            <div class="hero-actions">
+                <a class="btn-primary inline-btn" href="{{ url_for('auth.login') }}">Entrar no sistema</a>
+                <a class="btn-secondary" href="{{ url_for('main.dashboard') }}">Ir ao dashboard</a>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

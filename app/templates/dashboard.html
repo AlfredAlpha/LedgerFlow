@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - LedgerFlow</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <h2>LedgerFlow</h2>
+            <nav>
+                <a href="{{ url_for('main.dashboard') }}">Dashboard</a>
+                <a href="{{ url_for('clientes.lista') }}">Clientes</a>
+                <a href="{{ url_for('clientes.novo') }}">Novo Cliente</a>
+                <a href="{{ url_for('financeiro.mensalidades') }}">Boletos</a>
+                <a href="{{ url_for('financeiro.novo_boleto') }}">Novo Boleto</a>
+                <a href="{{ url_for('api.clientes') }}" target="_blank">API Clientes</a>
+                <a href="{{ url_for('auth.logout') }}">Sair</a>
+            </nav>
+        </aside>
+
+        <main class="content">
+            <header class="page-header">
+                <h1>Dashboard</h1>
+                <p>Painel de controle da NOVA CONTA</p>
+            </header>
+
+            <section class="cards">
+                <div class="card">
+                    <h3>Total de Clientes</h3>
+                    <p>{{ total_clientes }}</p>
+                </div>
+                <div class="card">
+                    <h3>Total de Boletos</h3>
+                    <p>{{ total_mensalidades }}</p>
+                </div>
+                <div class="card">
+                    <h3>Pagos</h3>
+                    <p>{{ pagas }}</p>
+                </div>
+                <div class="card">
+                    <h3>Pendentes</h3>
+                    <p>{{ pendentes }}</p>
+                </div>
+                <div class="card">
+                    <h3>Atrasados</h3>
+                    <p>{{ atrasadas }}</p>
+                </div>
+            </section>
+
+            <section class="chart-section">
+                <div class="card">
+                    <h3>Resumo Financeiro</h3>
+                    <canvas id="chart"></canvas>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('chart');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Pagos', 'Pendentes', 'Atrasados'],
+                datasets: [{
+                    label: 'Boletos',
+                    data: [{{ pagas }}, {{ pendentes }}, {{ atrasadas }}],
+                    backgroundColor: ['#1A1A1A', '#C1121F', '#555555']
+                }]
+            },
+            options: { responsive: true }
+        });
+    </script>
+</body>
+</html>

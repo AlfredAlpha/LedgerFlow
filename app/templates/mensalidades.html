@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boletos - LedgerFlow</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <h2>LedgerFlow</h2>
+            <nav>
+                <a href="{{ url_for('main.dashboard') }}">Dashboard</a>
+                <a href="{{ url_for('clientes.lista') }}">Clientes</a>
+                <a href="{{ url_for('clientes.novo') }}">Novo Cliente</a>
+                <a href="{{ url_for('financeiro.mensalidades') }}">Boletos</a>
+                <a href="{{ url_for('financeiro.novo_boleto') }}">Novo Boleto</a>
+                <a href="{{ url_for('auth.logout') }}">Sair</a>
+            </nav>
+        </aside>
+
+        <main class="content">
+            <header class="page-header page-flex">
+                <div>
+                    <h1>Boletos / Mensalidades</h1>
+                    <p>Controle financeiro da NOVA CONTA</p>
+                </div>
+                <a class="btn-primary inline-btn" href="{{ url_for('financeiro.novo_boleto') }}">Cadastrar Boleto</a>
+            </header>
+
+            <div class="card">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Cliente</th>
+                            <th>Descrição</th>
+                            <th>Valor</th>
+                            <th>Vencimento</th>
+                            <th>Status</th>
+                            <th>Código</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for m in data %}
+                        <tr>
+                            <td>{{ m.id }}</td>
+                            <td>{{ m.cliente.nome if m.cliente else m.cliente_id }}</td>
+                            <td>{{ m.descricao }}</td>
+                            <td>R$ {{ "%.2f"|format(m.valor) }}</td>
+                            <td>{{ m.vencimento }}</td>
+                            <td>{{ m.status }}</td>
+                            <td>{{ m.codigo_boleto or '' }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
